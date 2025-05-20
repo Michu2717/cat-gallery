@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     console.log("Stan selectedCat:", selectedCat);
-  }, [selectedCat]); // Debugowanie zmiany stanu
+  }, [selectedCat]);
 
   return (
     <div className="p-6 text-center">

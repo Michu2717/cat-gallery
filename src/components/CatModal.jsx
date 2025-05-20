@@ -3,7 +3,7 @@ import React from 'react';
 export default function CatModal({ cat, onClose }) {
     if (!cat) return null;
 
-    console.log("Wybrany kot:", cat); // Debugowanie danych
+    console.log("Wybrany kot:", cat);
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center">
