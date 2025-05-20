@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { fetchCats } from './services/CatService';
+import CatGallery from './components/CatGallery';
+import CatModal from './components/CatModal';
+import './index.css';
 
 function App() {
+  const [cats, setCats] = useState([]);
+  const [selectedCat, setSelectedCat] = useState(null);
+
+  const loadCats = async () => {
+    try {
+      const data = await fetchCats();
+      setCats(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    loadCats();
+  }, []);
+
+  useEffect(() => {
+    console.log("Stan selectedCat:", selectedCat);
+  }, [selectedCat]); // Debugowanie zmiany stanu
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="p-6 text-center">
+      <h1 className="text-2xl font-bold mb-4">Galeria kotów 😺</h1>
+      <button onClick={loadCats} className="mb-6 px-4 py-2 bg-blue-600 text-white rounded">
+        Refresh cats
+      </button>
+      <CatGallery cats={cats} onSelect={setSelectedCat} />
+      {selectedCat && <CatModal cat={selectedCat} onClose={() => setSelectedCat(null)} />}
     </div>
   );
 }
+
 
 export default App;
